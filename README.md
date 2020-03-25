@@ -22,13 +22,26 @@ Digital sine generation using USART (Baud Rate 115200 Bits/s)
 
 WARNING
 The float formatting support is not default enabled, check your MCU Settings from "Project Properties >  C/C++ Build > Settings > Tool Settings" enabling "use float with printf", or add manually "-u _printf_float" in linker flags.
+
  Click on Device Configuration Tool Update after completion to apply the modification 
 
 # [ADC](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/ADC%20Example)
 
- ADC conversione from pin AN0
+ ADC conversions from pin AN0
+
  The digital result of the conversion is saved in the variable *uiAnalogData*.
 
  The value of *uiAnalogData* is transmitted using USART (Baud Rate 115200 Bits/s).
 
  The output digital data can be viewed using Serial Plot from Arduino IDE or similar tools.
+
+# [User Button](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/User%Button)
+
+The User LED 2 state follow the User Button state.
+
+When button is pressed LED is on, and vice versa.
+
+Furthermore, every button pressure the string "Pressed" is transmitted using USART (Baud Rate 115200 Bits/s).
+
+Button debounce of 150 ms is used for reducing multiple USART prints.
+
