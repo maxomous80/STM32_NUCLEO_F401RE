@@ -45,3 +45,18 @@ Furthermore, every button pressure the string "Pressed" is transmitted using USA
 
 Button debounce of 150 ms is used for reducing multiple USART prints.
 
+# [External Interrupt](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/External%Interrupt)
+
+The User LED 2 state toggle upon the rising edge of the User Button pressure.
+
+Furthermore, every rising edge of the User Button pressure the string "Hello" is transmitted using USART (Baud Rate 115200 Bits/s).
+
+Note that the IRQ_Handler function is located in the file *stm32f4xx_it.c*
+
+The following definition
+
+*extern UART_HandleTypeDef huart2;*
+
+has been added to the file *stm32f4xx_it.c* for visibility purpose.
+
+
