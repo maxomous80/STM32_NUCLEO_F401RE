@@ -35,7 +35,7 @@ The float formatting support is not default enabled, check your MCU Settings fro
 
  The output digital data can be viewed using Serial Plot from Arduino IDE or similar tools.
 
-# [User Button](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/User%Button)
+# [User Button](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/User%20Button)
 
 The User LED 2 state follow the User Button state.
 
@@ -45,7 +45,7 @@ Furthermore, every button pressure the string "Pressed" is transmitted using USA
 
 Button debounce of 150 ms is used for reducing multiple USART prints.
 
-# [External Interrupt](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/External%Interrupt)
+# [External Interrupt](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/External%20Interrupt)
 
 The User LED 2 state toggle upon the rising edge of the User Button pressure.
 
