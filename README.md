@@ -76,11 +76,11 @@ The start of the timer is managed using the instruction:
 *HAL_TIM_Base_Start_IT(&htim2);*
 
 The Timer callback is reported hereafter, and actually fires the printing of "Timer Interrupt 2" by means of USART (Baud Rate 115200 Bits/s) and the toggle of the onboard LED 2.
-'''
+```
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Timer 2 interrupt
 {
 	HAL_UART_Transmit(&huart2, "Timer 2 Interrupt\n\r", 21, 1000);
 	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 }
-'''
+```
 
