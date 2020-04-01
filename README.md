@@ -59,4 +59,29 @@ The following definition
 
 has been added to the file *stm32f4xx_it.c* for visibility purpose.
 
+# [Led Blinking with Timer Interrupt](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Led%20Blink%20with%20Timer%20Interrupt)
+
+The User LED 2 state toggle upon the firing of the interrupt related to Timer 2 (set to 1 s).
+
+The settings of the timer are:
+
+*Prescaler: 9999*
+
+*Counter Period: 8399*
+
+The clock frequency is set to 84 MHz.
+
+The start of the timer is managed using the instruction:
+
+*HAL_TIM_Base_Start_IT(&htim2);*
+
+The Timer callback is reported hereafter, and actually fires the printing of "Timer Interrupt 2" by means of USART (Baud Rate 115200 Bits/s) and the toggle of the onboard LED 2.
+
+*void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Timer 2 interrupt*
+{
+	*HAL_UART_Transmit(&huart2, "Timer 2 Interrupt\n\r", 21, 1000);*
+
+	*HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);*
+}
+
 
