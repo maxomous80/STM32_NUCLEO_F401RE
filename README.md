@@ -88,9 +88,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Time
 A state machine provide an implementation of the time counting between two pressure of the User Button, and the value is printed by means of USART (Baud Rate 115200 Bits/s).
 
 First User Button pressure -> Start
+
 Second User Button pressure -> Stop
 
-Timer 2: 10 s
+Timer 2 update period: 10 s
 
 The settings of the timer are:
 
@@ -100,6 +101,7 @@ The settings of the timer are:
 
 
 *Attention: Timer 2 interrupt fires immediately, the bit flag clear is required*
+
 `__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately`
 
 
