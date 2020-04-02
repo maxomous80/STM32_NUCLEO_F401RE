@@ -73,7 +73,7 @@ The clock frequency is set to 84 MHz.
 
 The start of the timer is managed using the instruction:
 
-*HAL_TIM_Base_Start_IT(&htim2);*
+`HAL_TIM_Base_Start_IT(&htim2);`
 
 The Timer callback is reported hereafter, and actually fires the printing of "Timer Interrupt 2" by means of USART (Baud Rate 115200 Bits/s) and the toggle of the onboard LED 2.
 ```
@@ -83,4 +83,77 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Time
 	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 }
 ```
+# [Time counting](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Time%Counting)
 
+A state machine provide an implementation of the time counting between two pressure of the User Button, and the value is printed by means of USART (Baud Rate 115200 Bits/s).
+
+First User Button pressure -> Start
+Second User Button pressure -> Stop
+
+Timer 2: 10 s
+
+The settings of the timer are:
+
+*Prescaler: 39999*
+
+*Counter Period: 20999*
+
+
+*Attention: Timer 2 interrupt fires immediately, the bit flag clear is required*
+`__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately`
+
+
+
+In main.c
+
+```
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Timer 2 interrupt
+{
+	if (state==0)
+		__HAL_TIM_CLEAR_IT(htim2, TIM_IT_UPDATE);
+	else
+	{
+		HAL_TIM_Base_Stop(&htim2);
+		HAL_UART_Transmit(&huart2, "Timer 2 Reset\n\r", 15, 1000);
+		state=0; // state machine configuration
+	}
+
+
+}
+```
+
+In stm32f4xx_it.c
+```
+void EXTI15_10_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+	if (state==0)
+	{
+	HAL_TIM_Base_Start_IT(&htim2);	//timer start on first button pressing
+	__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately
+	__HAL_TIM_SetCounter(&htim2, 0); // set of the counter value to 0
+	HAL_UART_Transmit(&huart2, "Timer 2 Start\n\r", 15, 1000);
+	state=1; // state machine configuration
+	}
+	else
+		{
+		HAL_TIM_Base_Stop_IT(&htim2); //timer start on second button pressing
+		time2=__HAL_TIM_GET_COUNTER(&htim2); // reading of the timer value
+		state=0; // state machine configuration
+		HAL_UART_Transmit(&huart2, "Timer 2 Stop\n\r", 15, 1000);
+		uint8_t buffertx[50]="";
+		sprintf(buffertx, "Time: %lu ms\n\r", (time2*476/1000)); //476 is obtained multipliyng Prescaler value (39999) for CLK period (1/84000000)
+		HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
+		}
+
+  /* USER CODE END EXTI15_10_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+
+  /* USER CODE END EXTI15_10_IRQn 1 */
+}
+```
+
+This project provides example of usage of *extern* variables between different project files, and of timers, interrupt and user button.
+
+The time value is obtained multipliyng the counter value for the resolution (Prescaler value (39999) for the CLK period (1/84000000)) and is expressed in ms.
