@@ -159,3 +159,19 @@ void EXTI15_10_IRQHandler(void)
 This project provides example of usage of *extern* variables between different project files, and of timers, interrupt and user button.
 
 The time value is obtained multipliyng the counter value for the resolution (Prescaler value (39999) for the CLK period (1/84000000)) and is expressed in ms.
+
+# [Low Power States](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/PWR)
+
+Management of Low Power States
+
+The devices support three low-power modes to achieve the best compromise between low power consumption, short startup time and available wakeup sources:
+• Sleep mode
+In Sleep mode, only the CPU is stopped. All peripherals continue to operate and can
+wake up the CPU when an interrupt/event occurs.
+• Stop mode
+The Stop mode achieves the lowest power consumption while retaining the contents of SRAM and registers. All clocks in the 1.2 V domain are stopped, the PLL, the HSI RC and the HSE crystal oscillators are disabled. The voltage regulator can also be put either in normal or in low-power mode.
+The device can be woken up from the Stop mode by any of the EXTI line (the EXTI line source can be one of the 16 external lines, the PVD output, the RTC alarm/ wakeup/ tamper/ time stamp events).
+• Standby mode
+The Standby mode is used to achieve the lowest power consumption. The internal voltage regulator is switched off so that the entire 1.2 V domain is powered off. The PLL, the HSI RC and the HSE crystal oscillators are also switched off. After entering Standby mode, the SRAM and register contents are lost except for registers in the backup domain when selected.
+The device exits the Standby mode when an external reset (NRST pin), an IWDG reset, a rising edge on the WKUP pin, or an RTC alarm/ wakeup/ tamper/time stamp event occurs.
+Standby mode is not supported when the embedded voltage regulator is bypassed and the 1.2 V domain is controlled by an external power.
