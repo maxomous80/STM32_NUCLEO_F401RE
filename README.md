@@ -92,78 +92,35 @@ The settings of the timer are:
 
 *Counter Period: 20999*
 
-
-*Attention: Timer 2 interrupt fires immediately, the bit flag clear is required*
-
-`__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately`
-
-
-
-In main.c
-
-```
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim2) //Callback for Timer 2 interrupt
-{
-	if (state==0)
-		__HAL_TIM_CLEAR_IT(htim2, TIM_IT_UPDATE);
-	else
-	{
-		HAL_TIM_Base_Stop(&htim2);
-		HAL_UART_Transmit(&huart2, "Timer 2 Reset\n\r", 15, 1000);
-		state=0; // state machine configuration
-	}
-
-
-}
-```
-
-In stm32f4xx_it.c
-```
-void EXTI15_10_IRQHandler(void)
-{
-  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-	if (state==0)
-	{
-	HAL_TIM_Base_Start_IT(&htim2);	//timer start on first button pressing
-	__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately
-	__HAL_TIM_SetCounter(&htim2, 0); // set of the counter value to 0
-	HAL_UART_Transmit(&huart2, "Timer 2 Start\n\r", 15, 1000);
-	state=1; // state machine configuration
-	}
-	else
-		{
-		HAL_TIM_Base_Stop_IT(&htim2); //timer start on second button pressing
-		time2=__HAL_TIM_GET_COUNTER(&htim2); // reading of the timer value
-		state=0; // state machine configuration
-		HAL_UART_Transmit(&huart2, "Timer 2 Stop\n\r", 15, 1000);
-		uint8_t buffertx[50]="";
-		sprintf(buffertx, "Time: %lu ms\n\r", (time2*476/1000)); //476 is obtained multipliyng Prescaler value (39999) for CLK period (1/84000000)
-		HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
-		}
-
-  /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
-  /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-
-  /* USER CODE END EXTI15_10_IRQn 1 */
-}
-```
-
 This project provides example of usage of *extern* variables between different project files, and of timers, interrupt and user button.
 
 The time value is obtained multipliyng the counter value for the resolution (Prescaler value (39999) for the CLK period (1/84000000)) and is expressed in ms.
 
-# [Low Power States](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/PWR)
+# [Sleep Mode] (https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Sleep_Mode)
 
 Management of Low Power States
 
-The devices support three low-power modes to achieve the best compromise between low power consumption, short startup time and available wakeup sources:
+The devices support three low-power modes to achieve the best compromise between low power consumption, short startup time and available wakeup sources.
 • Sleep mode
 In Sleep mode, only the CPU is stopped. All peripherals continue to operate and can
 wake up the CPU when an interrupt/event occurs.
+
+# [Stop Mode] (https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Stop_Mode)
+
+Management of Low Power States
+
+The devices support three low-power modes to achieve the best compromise between low power consumption, short startup time and available wakeup sources.
+
 • Stop mode
 The Stop mode achieves the lowest power consumption while retaining the contents of SRAM and registers. All clocks in the 1.2 V domain are stopped, the PLL, the HSI RC and the HSE crystal oscillators are disabled. The voltage regulator can also be put either in normal or in low-power mode.
 The device can be woken up from the Stop mode by any of the EXTI line (the EXTI line source can be one of the 16 external lines, the PVD output, the RTC alarm/ wakeup/ tamper/ time stamp events).
+
+# [Standby Mode]
+
+Management of Low Power States
+
+The devices support three low-power modes to achieve the best compromise between low power consumption, short startup time and available wakeup sources.
+
 • Standby mode
 The Standby mode is used to achieve the lowest power consumption. The internal voltage regulator is switched off so that the entire 1.2 V domain is powered off. The PLL, the HSI RC and the HSE crystal oscillators are also switched off. After entering Standby mode, the SRAM and register contents are lost except for registers in the backup domain when selected.
 The device exits the Standby mode when an external reset (NRST pin), an IWDG reset, a rising edge on the WKUP pin, or an RTC alarm/ wakeup/ tamper/time stamp event occurs.

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
- 
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,12 +42,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
-extern uint8_t state;
-uint32_t time1, time2;
-extern UART_HandleTypeDef huart2;
-extern TIM_HandleTypeDef htim2;
-
+uint8_t state=0;
+uint16_t time=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,10 +60,11 @@ extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim2;
 /* USER CODE BEGIN EV */
 
+extern UART_HandleTypeDef huart2;
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
@@ -78,7 +75,9 @@ void NMI_Handler(void)
 
   /* USER CODE END NonMaskableInt_IRQn 0 */
   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-
+  while (1)
+  {
+  }
   /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
@@ -222,25 +221,36 @@ void TIM2_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-	if (state==0)
+	if (state==0) //riconosco prima pressione del punsate
 	{
-	HAL_TIM_Base_Start_IT(&htim2);	//timer start on first button pressing
-	__HAL_TIM_CLEAR_IT(&htim2, TIM_IT_UPDATE); //clear of the interrupt flag that fires immediately
-	__HAL_TIM_SetCounter(&htim2, 0); // set of the counter value to 0
-	HAL_UART_Transmit(&huart2, "Timer 2 Start\n\r", 15, 1000);
-	state=1; // state machine configuration
+	HAL_TIM_Base_Start_IT(&htim2); //avvio il timer
+	__HAL_TIM_SET_COUNTER(&htim2, 0);
+	state=1; // modifico lo stato in vista della prossima pressione del pulsante
+	HAL_UART_Transmit(&huart2, "Start\n\r", 8, 1000);
+	//stampo su seriale lo start
 	}
-	else
-		{
-		HAL_TIM_Base_Stop_IT(&htim2); //timer start on second button pressing
-		time2=__HAL_TIM_GET_COUNTER(&htim2); // reading of the timer value
-		state=0; // state machine configuration
-		HAL_UART_Transmit(&huart2, "Timer 2 Stop\n\r", 15, 1000);
-		uint8_t buffertx[50]="";
-		sprintf(buffertx, "Time: %lu ms\n\r", (time2*476/1000)); //476 is obtained multipliyng Prescaler value (39999) for CLK period (1/84000000)
-		HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
-		}
+	else	// riconosco la seconda pressione del pulsante
+	{
+	HAL_TIM_Base_Stop_IT(&htim2); // blocco il timer
+	time=__HAL_TIM_GET_COUNTER(&htim2); // ne acquisisco il valore puntuale e lo memorizzo in una variabile
+	state=0;	// modifico lo stato in vista della prossima pressione del pulsante
+	HAL_UART_Transmit(&huart2, "Stop\n\r", 8, 1000); //stampo su seriale lo stop
 
+	//uint16_t res=476;
+	// stampare su seriale il dato misurato (counter value)
+	uint8_t buffertx[50]="";
+	sprintf(buffertx, "Time value: %lu ms\n\r", time*476/1000); //divisione per 1000 necessaria per riportare il valore in ms
+	HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
+
+	// stampare su seriale il tempo espresso in ms
+
+	//uint8_t buffertx[50]="";
+	//sprintf(buffertx, "Time: %lu ms\n\r", (time2*476/1000));
+
+
+
+	//HAL_UART_Transmit(&huart2, "Counter value %\n\r", 8, 1000);
+	}
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
