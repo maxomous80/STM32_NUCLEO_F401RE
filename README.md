@@ -96,7 +96,7 @@ This project provides example of usage of *extern* variables between different p
 
 The time value is obtained multipliyng the counter value for the resolution (Prescaler value (39999) for the CLK period (1/84000000)) and is expressed in ms.
 
-# [Sleep Mode] (https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Sleep_Mode)
+# [Sleep Mode](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Sleep_Mode)
 
 Management of Low Power States
 
@@ -105,7 +105,7 @@ The devices support three low-power modes to achieve the best compromise between
 In Sleep mode, only the CPU is stopped. All peripherals continue to operate and can
 wake up the CPU when an interrupt/event occurs.
 
-# [Stop Mode] (https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Stop_Mode)
+# [Stop Mode](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Stop_Mode)
 
 Management of Low Power States
 
@@ -115,7 +115,7 @@ The devices support three low-power modes to achieve the best compromise between
 The Stop mode achieves the lowest power consumption while retaining the contents of SRAM and registers. All clocks in the 1.2 V domain are stopped, the PLL, the HSI RC and the HSE crystal oscillators are disabled. The voltage regulator can also be put either in normal or in low-power mode.
 The device can be woken up from the Stop mode by any of the EXTI line (the EXTI line source can be one of the 16 external lines, the PVD output, the RTC alarm/ wakeup/ tamper/ time stamp events).
 
-# [Standby Mode]
+# [Standby Mode](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Standby_Mode)
 
 Management of Low Power States
 
