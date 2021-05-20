@@ -125,3 +125,5 @@ The devices support three low-power modes to achieve the best compromise between
 The Standby mode is used to achieve the lowest power consumption. The internal voltage regulator is switched off so that the entire 1.2 V domain is powered off. The PLL, the HSI RC and the HSE crystal oscillators are also switched off. After entering Standby mode, the SRAM and register contents are lost except for registers in the backup domain when selected.
 The device exits the Standby mode when an external reset (NRST pin), an IWDG reset, a rising edge on the WKUP pin, or an RTC alarm/ wakeup/ tamper/time stamp event occurs.
 Standby mode is not supported when the embedded voltage regulator is bypassed and the 1.2 V domain is controlled by an external power.
+
+# [Simple Regression Neural Network Model](https://github.com/maxomous80/STM32_NUCLEO_F401RE/tree/master/Simple_Regression_ML_Model)

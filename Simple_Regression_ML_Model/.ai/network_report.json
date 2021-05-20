@@ -1,0 +1,129 @@
+{
+    "_allocate_inputs": 0,
+    "_allocate_outputs": 0,
+    "cli_parameters": "generate --name network -m /Users/massimomerenda/eML/LARSEC/Regression_ML_Model/network_regression.h5 --type keras --compression 1 --verbosity 1 --workspace /var/folders/pf/d1546h952h7ghlh2djb7jlz80000gn/T/mxAI_workspace23247527838310513977707790317358901 --output /Users/massimomerenda/.stm32cubemx",
+    "cli_version": {
+        "major": 1,
+        "micro": 1,
+        "minor": 4
+    },
+    "cli_version_str": "1.4.1",
+    "compression": {
+        "factor": null,
+        "layers": {}
+    },
+    "date_time": "Thu May 20 14:20:17 2021",
+    "error": 0,
+    "error_str": [],
+    "exec_cmd": "generate",
+    "exec_duration": 0.0,
+    "hash": "b96882ab9e3acce37be77a027e9bc040",
+    "inputs": [
+        "input_8"
+    ],
+    "layers": [
+        {
+            "extras": {
+                "n_macc": 0,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 12,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        1,
+                        1,
+                        3,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 0,
+            "inputs": [],
+            "name": "input_8",
+            "type": "Input"
+        },
+        {
+            "extras": {
+                "n_macc": 4,
+                "n_params": 4,
+                "psize": 16,
+                "rom_output": {
+                    "c_size": 4,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                },
+                "rom_size": 16
+            },
+            "id": 1,
+            "inputs": [
+                "input_8"
+            ],
+            "name": "dense_7",
+            "type": "Dense"
+        }
+    ],
+    "model_files": [
+        "/Users/massimomerenda/eML/LARSEC/Regression_ML_Model/network_regression.h5"
+    ],
+    "model_n_params": 4,
+    "model_name": "network_regression",
+    "model_size": 16,
+    "model_type": "keras",
+    "name": "network",
+    "outputs": [
+        "dense_7"
+    ],
+    "ram_io_size": [
+        12,
+        4
+    ],
+    "ram_size": [
+        0,
+        0
+    ],
+    "report_version": 1.1,
+    "rom_cfact": 1.0,
+    "rom_heap_inspector": 2048,
+    "rom_inputs": [
+        {
+            "c_size": 12,
+            "c_type": "float",
+            "name": "input_8"
+        }
+    ],
+    "rom_n_macc": 4,
+    "rom_outputs": [
+        {
+            "c_size": 4,
+            "c_type": "float",
+            "name": "dense_7"
+        }
+    ],
+    "rom_size": 16,
+    "strategy": "heap_overlay_pool",
+    "tools_api_version": {
+        "major": 1,
+        "micro": 1,
+        "minor": 4
+    },
+    "tools_version": {
+        "extra": "RC6",
+        "major": 6,
+        "micro": 0,
+        "minor": 0
+    },
+    "val_error": -1.0,
+    "val_error_desc": "None (None) #0",
+    "val_metrics": []
+}
