@@ -59,7 +59,7 @@
 extern RTC_HandleTypeDef hrtc;
 /* USER CODE BEGIN EV */
 extern UART_HandleTypeDef huart2;
-uint8_t buffertx[100]="";
+uint8_t bufferTx[100]="";
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -208,8 +208,8 @@ void RTC_WKUP_IRQHandler(void)
   /* USER CODE BEGIN RTC_WKUP_IRQn 0 */
 	SystemClock_Config ();
 	HAL_ResumeTick();
-	sprintf(buffertx,"WAKEUP FROM RTC\n NOW GOING IN STOP MODE AGAIN\n\n");
-	HAL_UART_Transmit(&huart2, buffertx, strlen (buffertx), 1000);
+	sprintf(bufferTx,"WAKEUP FROM RTC\n NOW GOING IN STOP MODE AGAIN\n\n");
+	HAL_UART_Transmit(&huart2, bufferTx, strlen (bufferTx), 1000);
 
   /* USER CODE END RTC_WKUP_IRQn 0 */
   HAL_RTCEx_WakeUpTimerIRQHandler(&hrtc);
@@ -226,12 +226,12 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 	SystemClock_Config ();
 	HAL_ResumeTick();
-	sprintf(buffertx,"WAKEUP FROM EXTI\n NOW GOING IN STOP MODE AGAIN\n\n");
-	HAL_UART_Transmit(&huart2, buffertx, strlen (buffertx), 1000);
+	sprintf(bufferTx,"WAKEUP FROM EXTI\n NOW GOING IN STOP MODE AGAIN\n\n");
+	HAL_UART_Transmit(&huart2, bufferTx, strlen (bufferTx), 1000);
 	HAL_PWR_DisableSleepOnExit();
 
   /* USER CODE END EXTI15_10_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  HAL_GPIO_EXTI_IRQHandler(B1_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
@@ -240,4 +240,3 @@ void EXTI15_10_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
