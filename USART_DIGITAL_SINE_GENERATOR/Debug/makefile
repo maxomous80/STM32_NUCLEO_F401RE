@@ -60,8 +60,8 @@ all: main-build
 main-build: USART_DIGITAL_SINE_GENERATOR.elf secondary-outputs
 
 # Tool invocations
-USART_DIGITAL_SINE_GENERATOR.elf USART_DIGITAL_SINE_GENERATOR.map: $(OBJS) $(USER_OBJS) C:\Users\Demetrio\Documents\git\STM32_NUCLEO_F401RE\USART_DIGITAL_SINE_GENERATOR\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "USART_DIGITAL_SINE_GENERATOR.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Demetrio\Documents\git\STM32_NUCLEO_F401RE\USART_DIGITAL_SINE_GENERATOR\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USART_DIGITAL_SINE_GENERATOR.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+USART_DIGITAL_SINE_GENERATOR.elf USART_DIGITAL_SINE_GENERATOR.map: $(OBJS) $(USER_OBJS) /Users/massimomerenda/STM32_NUCLEO_F401RE/USART_DIGITAL_SINE_GENERATOR/STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "USART_DIGITAL_SINE_GENERATOR.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/massimomerenda/STM32_NUCLEO_F401RE/USART_DIGITAL_SINE_GENERATOR/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="USART_DIGITAL_SINE_GENERATOR.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

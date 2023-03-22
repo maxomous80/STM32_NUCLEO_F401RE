@@ -1,0 +1,9 @@
+main.c:70:5:main	1
+main.c:141:6:SystemClock_Config	3
+main.c:188:13:MX_USART2_UART_Init	2
+main.c:221:13:MX_GPIO_Init	1
+main.c:249:6:StandbyMode	1
+main.c:265:6:SleepMode	1
+main.c:303:6:StopMode	1
+main.c:321:7:SYSCLKConfig_STOP	3
+main.c:359:6:Error_Handler	1
