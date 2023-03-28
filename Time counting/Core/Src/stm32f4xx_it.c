@@ -207,6 +207,15 @@ void SysTick_Handler(void)
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
+	if (state==0)
+		__HAL_TIM_ENABLE_IT(&htim2, TIM_IT_UPDATE );
+	else
+	{
+	HAL_TIM_Base_Stop(&htim2);
+	HAL_UART_Transmit(&huart2, "Time is over\n\r", 14, 1000);
+	state=0; // state machine configuration
+	}
+
 
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
@@ -242,14 +251,7 @@ void EXTI15_10_IRQHandler(void)
 	sprintf(buffertx, "Time value: %lu ms\n\r", time*476/1000); //divisione per 1000 necessaria per riportare il valore in ms
 	HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
 
-	// stampare su seriale il tempo espresso in ms
 
-	//uint8_t buffertx[50]="";
-	//sprintf(buffertx, "Time: %lu ms\n\r", (time2*476/1000));
-
-
-
-	//HAL_UART_Transmit(&huart2, "Counter value %\n\r", 8, 1000);
 	}
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(B1_Pin);
