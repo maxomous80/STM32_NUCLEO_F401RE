@@ -57,9 +57,9 @@ uint16_t time=0;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern TIM_HandleTypeDef htim2;
-/* USER CODE BEGIN EV */
 
+/* USER CODE BEGIN EV */
+extern TIM_HandleTypeDef htim2;
 extern UART_HandleTypeDef huart2;
 /* USER CODE END EV */
 
