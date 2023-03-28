@@ -238,6 +238,7 @@ void EXTI15_10_IRQHandler(void)
 	HAL_UART_Transmit(&huart2, "Start\n\r", 8, 1000);
 	//stampo su seriale lo start
 	}
+
 	else	// riconosco la seconda pressione del pulsante
 	{
 	HAL_TIM_Base_Stop_IT(&htim2); // blocco il timer
@@ -250,9 +251,9 @@ void EXTI15_10_IRQHandler(void)
 	uint8_t buffertx[50]="";
 	sprintf(buffertx, "Time value: %lu ms\n\r", time*476/1000); //divisione per 1000 necessaria per riportare il valore in ms
 	HAL_UART_Transmit(&huart2, buffertx, sizeof(buffertx), 1000);
-
-
 	}
+
+
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(B1_Pin);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
