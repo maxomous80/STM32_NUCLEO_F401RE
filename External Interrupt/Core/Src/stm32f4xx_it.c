@@ -32,6 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
  
 /* USER CODE END PD */
 
@@ -58,7 +59,7 @@
 /* External variables --------------------------------------------------------*/
 
 /* USER CODE BEGIN EV */
-
+extern UART_HandleTypeDef huart2;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -203,6 +204,11 @@ void SysTick_Handler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
+
+	// Pin state change
+	HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	// USART message
+	HAL_UART_Transmit(&huart2, (uint8_t*)"Pressed\r\n", 9, 1000);
 
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);

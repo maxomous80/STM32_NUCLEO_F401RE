@@ -68,6 +68,7 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -100,40 +101,42 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  /*## Configure the Wake up timer ###########################################*/
+	  	  /*  RTC Wake-up Interrupt Generation:
+	  	      Wake-up Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
+	  	      ==> WakeUpCounter = Wake-up Time / Wake-up Time Base
+
+	  	      Example: To configure the wake up timer to 20s the WakeUpCounter is set to 0x9C40:
+	  	        RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
+	  	        Wake-up Time Base = 16 /(32KHz) = 0.0005 seconds
+	  	        ==> WakeUpCounter = ~10s/0.0005s = 20000 = 0x4E20 */
+
+	  	  HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0x4E20, RTC_WAKEUPCLOCK_RTCCLK_DIV16); //10 s
+
+
+	  	  /****** Suspend the Ticks before entering the STOP mode or else this can wake the device up **********/
+	  	  HAL_SuspendTick();
+
+	  	  HAL_PWR_EnableSleepOnExit();
+
+	  	  /* Enter Stop Mode */
+	  	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
+
+
+	  	  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
+
+	  	  HAL_UART_Transmit(&huart2, "Code execution in main()\n\r", 25, 1000);
+	  	  for (int i=0; i<5; i++)
+	  	  {
+	  	  	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	  	  	  HAL_Delay(1000);
+	  	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 
-	  /*## Configure the Wake up timer ###########################################*/
-	  /*  RTC Wake-up Interrupt Generation:
-	      Wake-up Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
-	      ==> WakeUpCounter = Wake-up Time / Wake-up Time Base
 
-	      Example: To configure the wake up timer to 20s the WakeUpCounter is set to 0x9C40:
-	        RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
-	        Wake-up Time Base = 16 /(32KHz) = 0.0005 seconds
-	        ==> WakeUpCounter = ~10s/0.0005s = 20000 = 0x4E20 */
-
-	  HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0x4E20, RTC_WAKEUPCLOCK_RTCCLK_DIV16); //10 s
-
-
-	  /****** Suspend the Ticks before entering the STOP mode or else this can wake the device up **********/
-	  HAL_SuspendTick();
-
-	  HAL_PWR_EnableSleepOnExit();
-
-	  /* Enter Stop Mode */
-	  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
-
-
-	  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
-
-	  HAL_UART_Transmit(&huart2, "Code execution in main()\n\r", 25, 1000);
-	  for (int i=0; i<5; i++)
-	  {
-	  	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-	  	  HAL_Delay(1000);
-	  }
 
   }
   /* USER CODE END 3 */
@@ -297,8 +300,8 @@ static void MX_USART2_UART_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
+  /* USER CODE BEGIN MX_GPIO_Init_1 */
+  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -326,8 +329,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  /* USER CODE BEGIN MX_GPIO_Init_2 */
+  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

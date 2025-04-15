@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -13,7 +13,6 @@ RM := rm -rf
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
--include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -38,21 +37,21 @@ $(wildcard ../makefile.targets) \
 
 BUILD_ARTIFACT_NAME := Simple_Regression_ML_Model
 BUILD_ARTIFACT_EXTENSION := elf
-BUILD_ARTIFACT_PREFIX := 
-BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME).$(BUILD_ARTIFACT_EXTENSION)
+BUILD_ARTIFACT_PREFIX :=
+BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
 Simple_Regression_ML_Model.elf \
+
+MAP_FILES += \
+Simple_Regression_ML_Model.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
 Simple_Regression_ML_Model.list \
-
-OBJCOPY_BIN += \
-Simple_Regression_ML_Model.bin \
 
 
 # All Target
@@ -62,8 +61,8 @@ all: main-build
 main-build: Simple_Regression_ML_Model.elf secondary-outputs
 
 # Tool invocations
-Simple_Regression_ML_Model.elf: $(OBJS) $(USER_OBJS) /Users/massimomerenda/STM32_NUCLEO_F401RE/Simple_Regression_ML_Model/STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Simple_Regression_ML_Model.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/massimomerenda/STM32_NUCLEO_F401RE/Simple_Regression_ML_Model/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Simple_Regression_ML_Model.map" -Wl,--gc-sections -static -Wl,--start-group -l:NetworkRuntime600_CM4_GCC.a -Wl,--end-group -L../Middlewares/ST/AI/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Simple_Regression_ML_Model.elf Simple_Regression_ML_Model.map: $(OBJS) $(USER_OBJS) C:\Users\MEDNET\Documents\STM32_NUCLEO_F401RE\Simple_Regression_ML_Model\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Simple_Regression_ML_Model.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\MEDNET\Documents\STM32_NUCLEO_F401RE\Simple_Regression_ML_Model\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Simple_Regression_ML_Model.map" -Wl,--gc-sections -static -L../Middlewares/ST/AI/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -77,17 +76,12 @@ Simple_Regression_ML_Model.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Simple_Regression_ML_Model.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Simple_Regression_ML_Model.bin"
-	@echo 'Finished building: $@'
-	@echo ' '
-
 # Other Targets
 clean:
-	-$(RM) *
+	-$(RM) Simple_Regression_ML_Model.elf Simple_Regression_ML_Model.list Simple_Regression_ML_Model.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
@@ -96,7 +90,6 @@ fail-specified-linker-script-missing:
 warn-no-linker-script-specified:
 	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
 
-.PHONY: all clean dependents fail-specified-linker-script-missing warn-no-linker-script-specified
-.SECONDARY:
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
 
 -include ../makefile.targets
